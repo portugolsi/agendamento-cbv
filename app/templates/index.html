@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block extra_head %}
+<style>
+    /* CSS inline para melhorar a aparência do formulário */
+    
+    .container {
+        padding-top: 30px;
+        padding-bottom: 50px;
+    }
+
+    h2 {
+        color: #2c3e50; /* Azul escuro */
+    }
+
+    .btn-primary {
+        background-color: #3498db; /* Azul claro */
+        border-color: #3498db; /* Azul claro */
+    }
+
+    .btn-primary:hover {
+        background-color: #2980b9; /* Azul mais escuro */
+        border-color: #2980b9; /* Azul mais escuro */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="text-center">
+    <h3>Agenda mensal</h3>
+</div>
+
+
+<div class="container">
+    {% if messages %}
+
+    
+    {% if erro %}
+        <div class="alert alert-danger" role="alert">
+            {{erro  }}
+        </div>
+    {% elif success %}
+        <div class="alert alert-success" role="alert">
+        {{success  }}
+    </div>
+    {% endif %}
+    {%endif%}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            
+            
+            <div id= 'desktop'>
+                <iframe src="https://calendar.google.com/calendar/embed?src=c_7ad0b9c045e0a442e59e9027b79070848422e1261acc3cec9105d4ca16f53d35%40group.calendar.google.com&ctz=America%2FRecife" style="border: 0" width="600" height="600" frameborder="0" scrolling="no"></iframe>
+                <form method="post" enctype="multipart/form-data" class="mt-4">
+                {% csrf_token %}
+                <div class="text-center">
+                    <h3>Realizar novo agendamento</h3>
+                </div>
+                <div class="mb-3">
+                    {% bootstrap_form form %}
+                </div>
+                <div class="text-center">
+                    <button type="submit" id="btn-form" class="btn btn-primary">Solicitar agendamento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr('#id_data', {
+            dateFormat: 'Y-m-d', // Formato da data
+            enableTime: false, // Desativa a seleção de tempo
+            locale: 'pt',
+        });
+    });
+</script>
+
+{% endblock %}
